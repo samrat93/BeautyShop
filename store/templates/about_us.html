@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About_Us - MyBeauty{%endblock%}
+{% block content %}
+
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="bread-inner">
+					<ul class="bread-list">
+						<li><a href="/">Home<i class="ti-arrow-right"></i></a></li>
+						<li class="active"><a href="/about_us">About Us</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Breadcrumbs -->
+			
+		<!-- Start Blog Single -->
+		<section class="blog-single section" style="padding:50px;">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-12">
+						<div class="blog-single-main">
+							<div class="row">
+							{% for about_us in about_us%}
+								<div class="col-12">
+									<h2 class="blog-title">{{about_us.title}}</h2>
+									<div class="blog-meta">
+										<span class="author">
+											<a href="#"><i class="fa fa-user"></i>By Admin</a>
+											<a href="#"><i class="fa fa-calendar"></i>{{about_us.date}}</a>
+										</span>
+									</div>
+									<div class="image">
+										<img src="{{about_us.image.url}}" style="margin-bottom:15px;" alt="MyBeauty">
+									</div>
+									<div class="blog-detail">
+										<div class="content">
+											<h3 class="blog-title">Namaste,</h3>
+											<p>{{about_us.desc}}</p>
+										</div>
+									</div>
+								</div>
+							{%endfor%}	
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-12">
+						<div class="main-sidebar">
+							<div class="single-widget recent-post">
+								<h3 class="title">Recent post</h3>
+								<!-- Single Post -->
+								{% for vlogs in vlogs%}
+								<div class="single-post">
+									<div class="image">
+										<a href="{{vlogs.urls}}"><img src="{%static 'images/post.png'%}" alt="#"></a>
+									</div>
+									<div class="content">
+										<h5><a href="{{vlogs.urls}}">{{vlogs.title}}</a></h5>
+										<ul class="comment">
+											<li><i class="fa fa-calendar" aria-hidden="true"></i>{{vlogs.date}}</li>
+										</ul>
+									</div>
+								</div>
+								{% endfor %}
+								<!-- End Single Post -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+{% endblock content %}

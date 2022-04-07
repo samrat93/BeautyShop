@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'login/css/style.css' %}">
+
+	<title>User:Login-MyBeauty</title>
+</head>
+<body>
+    <div class="form_wrapper">
+  <div class="form_container">
+    <div class="title_container">
+      <h2>MyBeauty | User Login</h2>
+    </div>
+    <div class="row clearfix">
+      <div class="">
+        <form method="POST" enctype="multipart/form-data">
+		      {% csrf_token %}
+		      {% if error%}
+          <div class="alert alert-danger" align="center" style="margin-top:10px;margin-bottom:10px;" role="alert">
+              {{error}}
+          </div>
+          {% endif %}
+		  <div class="input_field"> <span><i class="fa fa-envelope" aria-hidden="true"></i></i></span>
+            <input type="email" name="email" id="" placeholder="Email" value="{{values.email}}" required />
+          </div>
+          <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
+            <input type="password" name="password" placeholder="Password" id="" required />
+          </div>
+          <input class="button" type="submit" value="Login" />
+          <a href="{% url 'forget_password' %}">Forget Password ?</a><br>
+          <hr>
+        <div class="row clearfix">
+          <div class="col_half">
+            {% comment %} <input onclick="location.href='/signup'" class="button" type="submit" value="Register New Account" /> {% endcomment %}
+            <a href="/signup">Register New Account</a><br>
+          </div>
+          <div class="col_half">
+            {% comment %} <input onclick="location.href='/'" class="button" type="submit" value="Back To Website"/> {% endcomment %}
+           <a href="/">Back To Website</a><br>
+          </div>
+			  </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="credit">Developed by <a href="#" target="_blank">Samrat Bikram Shah</a></p>
+</body>
+</html>

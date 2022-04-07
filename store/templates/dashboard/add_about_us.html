@@ -1,0 +1,81 @@
+{% extends 'dashboard/base.html' %}
+{% load static%}
+{% block body %}
+
+<!-- This is to hide because about us page is not added multiple times. 
+<div class="card border-danger mb-3">
+    <div class="card-header" align="center" style="color:green; font-size:30px;">Add About Us </div>
+    <div class="card-body text-primary">
+        <div class="container contact-form">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-sm-10" style="margin-top:10px; margin-bottom:15px">
+                            <input type="text" name="title" class="form-control" placeholder="Title Here" value="" required/>
+                        </div>
+                        <div class="form-group mt-3" style="margin-bottom:15px;">
+                            <label class="mr-2">Upload Image :</label>
+                            <input type="file" name="image">
+                        </div>
+                        <div align="center">
+							{% if messages %}
+								<ul class="messages">
+								{% for message in messages %}
+								<h4 align = "right" style="color:green"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h4>
+								{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"  style="margin-top:10px;margin-bottom:10px;">
+                           <textarea class="form-control" name="desc" placeholder="About Us Description Here..." rows="3"></textarea>
+                        
+                            <div class="form-group row" style="margin-top:10px">
+                                <div class="col-sm-10" align="right">
+                                    <input type="submit" name="submit" class="btn btn-success" value="Save Details" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>         
+        </div>
+    </div>
+</div>
+
+-->
+<div class="card border-danger mb-3">
+    <div class="card-header" align="center" style="color:green; font-size:30px;">About Us Details</div>
+    <div class="card-body text-primary">          
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>S.N</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Operations</th>
+                    </tr>
+                </thead>
+                {% for about_us in add_about_us%}
+                <tbody>
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{about_us.title}}</td>
+                        <td>{{about_us.desc}}</td>
+                        <td><img src="{{about_us.image.url|default_if_none:'#'}}" height="70" width="100"> </td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'edit_about_us' id=about_us.id %}"style="margin-right:10px;"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

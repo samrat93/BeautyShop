@@ -1,0 +1,54 @@
+{% extends 'dashboard/base.html' %}
+{% load static%}
+{% block body %}
+
+<!-- This is the start of main dashboard page content section. -->
+<div class="card border-danger mb-3">
+    <div class="card-header" align="center" style="color:green; font-size:30px;">Product Order By {{update_orders.customer.first_name}}</div>
+    <div class="card-body text-primary">
+        <div class="container contact-form">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-sm-10" style="margin-top:10px">
+                            <p>Customer Name : <input type="text" name="c_name" class="form-control" value="{{update_orders.customer.first_name}}" readonly/></p>
+                        </div>
+                        <div class="col-sm-10" style="margin-top:10px">
+                            <p>Order Address :<input type="text" name="address" class="form-control" value="{{update_orders.address}}" readonly/></p>
+                        </div>
+                        <div class="col-sm-10" style="margin-top:10px">
+                            <p>Mobile Number :<input type="text" name="phone" class="form-control" value="{{update_orders.phone}}" readonly/></p>
+                        </div>
+                        <div class="col-sm-10" style="margin-top:10px">
+                           <p>Product Name : <input type="text" name="p_name" class="form-control" value="{{update_orders.product.name}}" readonly/></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                         <div class="col-sm-10" style="margin-top:10px">
+                            <p>Product Quantity : <input type="Number" name="quantity" class="form-control" value="{{update_orders.quantity}}" readonly/></p>
+                        </div>
+                        <div class="col-sm-10" style="margin-top:10px">
+                           <p>Total Price :  <input type="Number" name="price" class="form-control" value="{{update_orders.price}}" readonly/></p>
+                        </div>
+                        <div class="col-sm-10" style="margin-top:10px">
+                           <p>Order Date :  <input type="text" name="date" class="form-control" value="{{update_orders.date}}" readonly/></p>
+                        </div>
+                       <div class="col-sm-10" style="margin-top:10px">
+                       <p class="btn btn-outline-primary">Order Status :
+                            <input type="checkbox" name="status" style="width:20px; height:20px;" class="form-check-label"/></p>
+                        </div>
+                        <div class="form-group row" style="margin-top:10px;margin-bottom:1px;" align="right">
+                            <div class="col-sm-10">
+                                <input type="submit" name="submit" class="btn btn-primary" value="Check Out Order" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>        
+        </div>
+    </div>
+</div>
+
+<!-- This is the start of main table content page section. -->
+{% endblock %}

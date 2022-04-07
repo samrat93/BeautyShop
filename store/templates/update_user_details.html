@@ -1,0 +1,77 @@
+
+{% load custom_filter %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+		<link rel="stylesheet" type="text/css" href="{% static 'login/css/style.css' %}">
+
+		<title>MyBeauty User Details</title>
+	</head>
+	<body>
+		<div class="form_wrapper">
+			<div class="form_container">
+				<div class="title_container">
+					<h2>You Can Update Your Profile {{data.first_name}}</h2>
+				</div>
+				<div class="row clearfix">
+					<form method ="POST" enctype="multipart/form-data">
+						{% csrf_token %}
+						<div class="input_field">
+							<p style="color:purple;">Your Address : </p>
+							<input type="text" name="address" placeholder="Address here..." value="{{data.address}}" required />
+						</div>
+						<div class="input_field select_option">
+							<p style="color:purple;">Select Your Gender : </p>
+							<select name="gender">
+							<option value="{{data.gender}}">{{data.gender}}</option>
+							<option value="male">Male</option>
+							<option value="female">Female</option>
+							<option value="other">Other</option>
+							</select>
+						</div>
+						<div class="input_field select_option">
+							<p style="color:purple;">Select Your State : </p>
+							<select name="state">
+							<option value="{{data.state}}">{{data.state}}</option>
+							{% for state in state %}
+								<option value="{{state.state_name}}">{{state.state_name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+						<div class="input_field">
+							<p style="color:purple;">Your City : </p>
+							<input type="text" name="city" placeholder="City here..." value="{{data.city}}" required />
+						</div>
+						<div class="input_field">
+							<p style="color:purple;">Pin Code : </p>
+							<input type="Number" name="pincode" placeholder="Pincode here..." value="{{data.pincode}}"/>
+						</div>
+
+						{%if data.image %}
+							
+						{%else%}
+						<div class="input_field">
+                            <label class="input_field">Upload Image :</label>
+                            <input type="file" name="image" style="margin-bottom:10px"required />
+                        </div>
+						{%endif%}
+						<div class="row clearfix">
+							<div class="col_full">
+								<input class="button" type="submit" value="Update Details" />
+							</div>
+						</div>
+					</form>
+					<p class="login-register-text">Want to go back ? <a href="{% url 'user_details' %}">Your Profile</a>.</p>
+					<p class="login-register-text">Yout Want To <a href="logout">Logout ?</a></p>
+				</div>
+			</div>
+		</div>
+		<p class="credit">Developed by <a href="#" target="_blank">Anjana | Mitsu | Tanvi</a></p>
+	</body>
+</html>

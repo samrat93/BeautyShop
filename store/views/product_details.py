@@ -1,0 +1,55 @@
+from django.core import paginator
+from django.shortcuts import render , redirect , HttpResponseRedirect
+from django.views import View
+from store.models.product import Product
+from store.models.category import Category
+from store.models.customer import Customer
+from dashboard.models import Image_slider
+from django.core.paginator import Paginator
+from django.urls import reverse
+
+
+class Product_details(View):
+    def post(self,request,id):
+        product = request.POST.get('product')
+        remove = request.POST.get('remove')
+        cart = request.session.get('cart')
+        if cart:
+            quantity = cart.get(product)
+            if quantity:
+                if remove:
+                    if quantity<=1:
+                        cart.pop(product)
+                    else:
+                        cart[product] = quantity-1
+                else:
+                    cart[product] = quantity+1
+            else:
+                cart[product] = 1
+        else:
+            cart = {}
+            cart[product] =1
+        request.session['cart'] = cart
+        #products = Product.objects.get(id=id)
+        print('cart',request.session['cart'])
+        products = Product.objects.get(id=id)
+        return render(request,'product_details.html',{'products':products})
+
+    def get(self,request,id):
+        cart = request.session.get('cart')
+        if not cart:
+            request.session['cart'] = {}
+        products = None
+        products = Product.objects.get(id=id)
+        category = products.category
+        Related_prod = Product.objects.filter(category=category)
+        print(category)
+        if request.session.has_key('customer'):
+            get_session_id = request.session['customer']
+            cust_data = Customer.objects.get(id = get_session_id)
+            products = Product.objects.get(id=id)
+            category = products.category
+            Related_prod = Product.objects.filter(category=category)
+            return render(request,'product_details.html',{'products':products,'cust_data':cust_data,'Related_prod':Related_prod})
+        else:
+            return render(request,'product_details.html',{'products':products,'Related_prod':Related_prod})

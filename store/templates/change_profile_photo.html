@@ -1,0 +1,53 @@
+
+{% load custom_filter %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+		<link rel="stylesheet" type="text/css" href="{% static 'login/css/style.css' %}">
+
+		<title>MyBeauty User Details</title>
+	</head>
+	<body>
+		<div class="form_wrapper">
+			<div class="form_container">
+				<div class="title_container">
+					<h2>You Can Change Your Profile Photo {{data.first_name}}</h2>
+				</div>
+				<hr>
+				<div class="row clearfix">
+				{% if data.image%}
+					<form method ="POST" enctype="multipart/form-data">
+						{% csrf_token %}
+                        <div align="center">
+                            <img class="img-circle" src="{{data.image.url|default_if_none:'#'}}"/>
+                        </div>  
+						<div class="input_field">
+                            <label class="input_field">Upload Image :</label>
+							<input type="file" class="input_field" name="image" value="{{data.image}}" style="margin-bottom:15px; margin-top:15px;"/>
+						</div>   
+						<div class="row clearfix">
+							<div class="col_full">
+								<input class="button" type="submit" value="Update Profile Photo" />
+							</div>
+						</div>
+					</form>
+					{% else %}
+					<div align="center" style="margin-top:15px;margin-bottom:15px;">
+                        <img class="img-circle" src="{%static 'images/no_img.jpg'%}" />
+                    </div>
+					{% endif %}
+					<hr>
+					<p class="login-register-text">Want to go back ? <a href="{% url 'user_details' %}">Your Profile</a>.</p>
+					<p class="login-register-text">Yout Want To <a href="logout">Logout ?</a></p>
+				</div>
+			</div>
+		</div>
+		<p class="credit">Developed by <a href="facebook.com/unique.s.shah" target="_blank">Samrat Bikram Shah</a></p>
+	</body>
+</html>

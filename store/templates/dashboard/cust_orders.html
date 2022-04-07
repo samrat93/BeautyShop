@@ -1,0 +1,64 @@
+{% extends 'dashboard/base.html' %}
+{% load static%}
+{% block body %}
+
+<div class="card border-danger mb-3">
+    <div class="card-header" align="center" style="color:green; font-size:30px;">Customers Order Detail</div>
+    <div class="card-body text-primary">          
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="center">S.N</th>
+                        <th class="text-center">Customer Name</th>
+                        <th class="text-center">Customer Phone No</th>
+                        <th class="text-center">Order Address</th>
+                        <th class="text-center">Order Date</th>
+                        <th class="text-center">Product Quantity</th>
+                        <th class="text-center">Total Price</th>
+                        <th class="text-center">Product Name<th>
+                        <th class="text-center">Order Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for order in cust_order%}
+                    <tr>
+                        <td class="text-center">{{forloop.counter}}</td>
+                        <td class="text-center">{{order.customer.first_name}}</td>
+                        <td class="text-center">{{order.phone}}</td>
+                        <td class="text-center">{{order.address}}</td>
+                        <td class="text-center">{{order.date}}</td>
+                        <td class="text-center">{{order.quantity}}</td>
+                        <td class="text-center">{{order.price}}</td>
+                        <td class="text-center">{{order.product.name}}<td>
+                        {%if order.status == False%}
+                        <td><a class="btn btn-warning" href="{% url 'update_orders' id=order.id %}">Pending</a></td>
+                        {% else %}
+                        <td><a class="btn btn-success">Complete</a></td>
+                        {%endif%}
+                    </tr>
+                     {% endfor %}
+                </tbody>
+            </table>
+             <ul class="nav justify-content-center">
+				{% if cust_order.has_previous %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{cust_order.previous_page_number}}">Previous</a>
+					</li>
+					{% endif %}
+					<li class="page-item">
+						<a class="page-link" >{{ cust_order.number }}</a>
+					</li>
+					{% if cust_order.has_next %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{cust_order.next_page_number}}">Next</a>
+					</li>
+				{% endif %}   
+			</ul>
+        </div>
+    </div>
+</div>
+<!-- This is the end of main dashboard page content section. -->
+{% endblock %}
+
+

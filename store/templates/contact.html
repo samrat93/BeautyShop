@@ -1,0 +1,119 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Contact - MyBeauty{%endblock%}
+{% block content %}
+
+
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="bread-inner">
+					<ul class="bread-list">
+						<li><a href="/">Home<i class="ti-arrow-right"></i></a></li>
+						<li class="active"><a href="/contact">Contact Us</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Breadcrumbs -->
+    <!-- Start Contact -->
+	<section id="contact-us" class="contact-us section">
+		<div class="container">
+				<div class="contact-head">
+					<div class="row">
+						<div class="col-lg-8 col-12">
+							<div class="form-main">
+								<div class="title">
+									<h4>Get in touch</h4>
+									<h3>Write us a message</h3>
+								</div>
+								<form class="form" method="POST" action="{%url 'contact'%}">
+								{% csrf_token %}
+									<div class="row">
+										<div class="col-lg-6 col-12">
+											<div class="form-group">
+												<label>Your Name<span>*</span></label>
+												<input name="name" type="text" placeholder=""required>
+											</div>
+										</div>
+										<div class="col-lg-6 col-12">
+											<div class="form-group">
+												<label>Your Subjects<span>*</span></label>
+												<input name="subject" type="text" placeholder=""required>
+											</div>
+										</div>
+										<div class="col-lg-6 col-12">
+											<div class="form-group">
+												<label>Your Email<span>*</span></label>
+												<input name="email" type="email" placeholder=""required>
+											</div>	
+										</div>
+										<div class="col-lg-6 col-12">
+											<div class="form-group">
+												<label>Your Phone<span>*</span></label>
+												<input name="phone" type="number" placeholder=""required>
+											</div>	
+										</div>
+										<div class="col-12">
+											<div class="form-group message">
+												<label>your message<span>*</span></label>
+												<textarea name="message" placeholder=""required></textarea>
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="form-group button" style="margin-bottom:10px">
+												<button type="submit" class="btn ">Send Message</button>
+											</div>
+										</div>
+									</div>
+									<div>
+										{% if messages %}
+										<ul class="messages">
+											{% for message in messages %}
+											<h4 align = "right" style="color:green"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h4>
+											{% endfor %}
+										</ul>
+										{% endif %}
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="col-lg-4 col-12">
+							<div class="single-head">
+								<div class="single-info">
+									<i class="fa fa-phone"></i>
+									<h4 class="title">Call us Now:</h4>
+									<ul>
+										<li>+91 - 9861251331</li>
+										<li>+91 - 9861251331</li>
+									</ul>
+								</div>
+								<div class="single-info">
+									<i class="fa fa-envelope-open"></i>
+									<h4 class="title">Email:</h4>
+									<ul>
+										<li><a href="#">samrat.b.shah2016@gmail.com</a></li>
+										<li><a href="#">samratshah.mca20@scet.ac.in</a></li>
+									</ul>
+								</div>
+								<div class="single-info">
+									<i class="fa fa-location-arrow"></i>
+									<h4 class="title">Our Address:</h4>
+									<ul>
+										<li>A28 2nd Floor Khodiyar-nagar Society, Adajangam, Surat, Gujarat, India.</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</section>
+	<!--/ End Contact -->
+	
+{% endblock content %}

@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block title %}Cart -MyBeauty{%endblock%}
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+
+
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="bread-inner">
+					<ul class="bread-list">
+						<li><a href="/">Home<i class="ti-arrow-right"></i></a></li>
+						<li class="active"><a href="/cart">Your Cart</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Breadcrumbs -->
+{% if request.session.cart %}
+<section id="contact-us" class="contact-us section">
+		<div class="container">
+				<div class="contact-head">
+					<div class="row">
+            <div class="title" align="center">
+              <h2>Your Cart</h2>
+            </div>
+            <table class="table shopping-summery">
+                <thead>
+                    <tr class="main-hading">
+                        <th class="text-center">Sno.</th>
+                        <th class="text-center">Image</th>
+                        <th class="text-center">Product</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-center">Total</th>
+                        <th colspan="2"class="text-center">Update Cart</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for product in products %}
+                    <tr>
+                        <td class="text-center">{{forloop.counter}}</td>
+                        <td class="text-center"><img style="height: 80px;" class="rounded-circle" src="{{product.image.url}}" alt=""></td>
+                        <td class="text-center">{{product.name}}</td>
+                        <td class="text-center">{{product.price|currency}}</td>
+                        <td class="text-center">{{product|cart_quantity:request.session.cart}}</td>
+                        <td class="text-center">{{product|price_total:request.session.cart|currency}}</td>
+                        <form action="/cart#{{product.id}}"class="col-2"method="post">
+                          {% csrf_token %}
+                          <input hidden type="text" name='product' value='{{product.id}}'>
+                          <input hidden type="text" name='remove' value='True'>
+                          <td><button type="submit" class="btn"><i class="fa fa-trash"></i></button></td>
+                        </form>
+                        <form  action="/cart#{{product.id}}" class="col-2 " method="post">
+                          {% csrf_token %}
+                          <input hidden type="text" name='product' value='{{product.id}}'>
+                  
+                          <td><button type="submit" class="btn"><i class="fa fa-plus"></i></button></td>
+                        </form>
+                    </tr>
+
+                    {% endfor %}
+                  
+                </tbody>
+
+                <tfoot>
+                 <tr>
+                        <th colspan="4"></th>
+                        
+                        <th class="text-center" colspan="">Discount(10%)</th>
+                        <th class="text-center">{{products|total_dis_price:request.session.cart|currency}}</th>
+                    </tr>
+                    <tr>
+                        <th colspan="4"></th>
+                        
+                        <th class="text-center" colspan="">Grand Total</th>
+                        <th class="text-center">{{products|total_cart_price:request.session.cart|currency}}</th>
+                    </tr>
+                   
+                </tfoot>
+            </table>
+          </div>
+        </div>
+        {% if request.session.cart %}
+        <div align="right"><a href="/checkout" class="btn">Check out</a></div>
+        {% else %}
+        <h4 align="center">Your Cart Is Empty</h4>
+        {% endif %}
+      </div>
+</section>
+
+
+  <!-- Modal 
+  
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" align="left" id="exampleModalLabel">
+              Please Fillup the Data and Order The Product Now
+          </h5>
+          <hr>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="m-2 p-3">
+            <form action="/check-out" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="">Address</label>
+                  <input type="text" name="address" id="" class="form-control" placeholder="" aria-describedby="helpId" required/>
+                  
+                </div>
+                <div class="form-group">
+                    <label for="">Phone</label>
+                    <input type="Number" name="phone" id="" class="form-control" placeholder="" aria-describedby="helpId"required/>
+                  </div>
+
+                  <input type="submit" class="btn float-right btn-outline-info col-lg-6" value="Check out">
+            </form>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div> -->
+{% else %}
+
+<section id="contact-us" class="contact-us section">
+  <div class="container">
+		<div class="contact-head">
+			<div class="row">
+        <div class="title" align="right">
+          <h4 align="center">Your Cart Is Empty</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'dashboard/base.html' %}
+{% load static%}
+{% block body %}
+
+<!-- This is the start of main dashboard page content section. -->
+<div class="card border-danger mb-3">
+    <div class="card-header" align="center" style="color:green; font-size:30px;">Add Image Slider</div>
+    <div class="card-body text-primary">
+        <div class="container contact-form">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-sm-10" style="margin-top:10px; margin-bottom:15px">
+                            <input type="text" name="title" class="form-control" placeholder="Slider-Title" value="" required/>
+                        </div>
+                        <div class="form-group mt-3" style="margin-bottom:15px;">
+                            <label class="mr-2">Upload Image :</label>
+                            <input type="file" name="img">
+                        </div>
+                        <div align="center">
+							{% if messages %}
+								<ul class="messages">
+								{% for message in messages %}
+								<h4 align = "right" style="color:green"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h4>
+								{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"  style="margin-top:10px;margin-bottom:10px;">
+                           <input type="text" name="desc" class="form-control" placeholder="Slider Description" value="" required/>
+                        <div class="form-group row" style="margin-top:10px">
+                            <div class="col-sm-10" align="right">
+                                <input type="submit" name="submit" class="btn btn-success" value="Save Slider" />
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </form>         
+        </div>
+    </div>
+</div>
+
+<div class="card border-danger mb-3">
+    <div class="card-header" align="center" style="color:green; font-size:30px;">Slider Preview </div>
+    <div class="card-body text-primary">          
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>S.N</th>
+                        <th>Image Preview</th>
+                        <th>Slider Title</th>
+                        <th>Description</th>
+                        <th colspan="2">Operations</th>
+                    </tr>
+                </thead>
+                {% for slider in sliders%}
+                <tbody>
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td><img src="{{slider.img.url|default_if_none:'#'}}" height="70" width="120"> </td>
+                        <td>{{slider.title}}</td>
+                        <td>{{slider.desc}}</td>
+                        <td align="right"><a class="btn btn-primary" href="{% url 'edit_slider' id=slider.id %}"><i class="fas fa-edit" aria-hidden="true"></i></a></td>
+                        <td><a class="btn btn-danger" href="{% url 'delete_slider' id=slider.id %}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+<!-- This is the start of main table content page section. -->
+{% endblock %}

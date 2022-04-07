@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Product_Details - MyBeauty{%endblock%}
+{%block content %}
+{% load cart %}
+{% load custom_filter %}
+
+<!-- Breadcrumbs -->
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="bread-inner">
+						<ul class="bread-list">
+							<li><a href="/">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="/product_details/{{products.id}}">Product Details</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Breadcrumbs -->
+	<!-- Start Contact -->
+	<section id="contact-us" class="contact-us section" style="padding: 50px;">
+		<div class="container">
+			<div class="contact-head">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-main">
+							<div class="title">
+								<h4>{{products.name}}</h4>
+							</div>
+								<div class="row">
+									<div class="col-lg-6 col-12">
+                                        <div class="form-group">
+											<img  src="{{products.image.url}}" height="450px"width="300" class="image" alt="...">
+                                        </div>
+									</div>
+                                    <div class="col-lg-6 col-12">
+                                        <div class="title"> <h3>Product Description</h3></div>
+                                        <div class="form-group">
+											<table class="table shopping-summery">
+                                                <tr class="main-hading">
+                                                    <th class="product-name">Product Name</th>
+                                                    <td class="title">
+                                                        <h4>{{products.name}}</h4>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="product-name">Product Category</th>
+                                                    <td class="title">
+                                                        <h4>{{products.category}}</h4>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="product-name">Price</th>
+                                                    <td class="title"> <h4>{{products.price}}</h4></td>
+                                                </tr>
+                                                 <tr>
+                                                    <th class="product-name">Description</th>
+                                                    <td class="title"> <h4>{{products.description}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td> 
+                                                        {% if products|is_in_cart:request.session.cart %}
+                                                        <div class="row no-gutters">
+                                                            <form action="/product_details/{{products.id}}" class="col-2 " method="post" enctype="multipart/form-data">
+                                                                {% csrf_token %}
+                                                                <input hidden type="text" name='product' value='{{products.id}}'>
+                                                                <input hidden type="text" name='remove' value='True'>
+                                                                
+                                                                <button type="submit" class="btn btn-success btn-lg float-left"><i class="fa fa-trash"></i></button>
+                                                            </form>
+                                                            <div class="text-center col">{{products|cart_quantity:request.session.cart}} in Cart</div>
+                                                            <form action="/product_details/{{products.id}}" class="col-2 " method="post">
+                                                                {% csrf_token %}
+                                                                <input hidden type="text" name='product' value='{{products.id}}'>
+                                                                
+                                                                <button type="submit" class="btn btn-success btn-lg float-right"><i class="fa fa-plus-square"></i></button>
+                                                            </form>
+                                                        </div>
+                                                        {% else %}
+                                                        <form action="" method="POST" class="btn-block" enctype="multipart/form-data">
+                                                            {% csrf_token %}
+                                                            <input hidden type="text" name="product" value="{{products.id}}">
+                                                            <input type="submit" class="btn" value="Add To Cart">
+                                                        </form>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+							        </div>
+                                </div>
+			            </div>
+                    </div>
+                </div>
+		    </div>
+        </div>
+	</section>
+
+    <!-- Start Category Area -->
+<div class="product-area most-popular section" style="padding: 0px;">
+    <div class="container">
+        <div class="row">
+			<div class="col-12">
+				<div class="section-title">
+					<h2>Product related to this item</h2>
+				</div>
+			</div>
+        </div>
+        <div class="row" style="padding-bottom:50px;">
+            <div class="col-12">
+                <div class="owl-carousel popular-slider" >
+					<!-- Start Single Product -->
+					{% for r_prod in Related_prod%}
+					<div class="single-product">
+						<div class="product-img">
+							<a href="/product_details/{{r_prod.id}}">
+								<img class="default-img"style="height:310px;wedth:250px" src="{{r_prod.image.url}}" alt="#">
+								<img class="hover-img" src="{{r_prod.image.url}}" alt="#">
+							</a>
+							<div class="button-head">
+								<div class="product-action">
+									<a href="#">{{r_prod.name}}</a>
+								</div>
+							</div>
+						</div>
+						<div class="product-content">
+							<h3><a href="#">{{category.name}}</a></h3>
+						</div>
+					</div>
+					{% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Category Area -->
+	<!--/ End Contact -->
+
+{% endblock %}

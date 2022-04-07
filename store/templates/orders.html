@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Orders - MyBeauty{%endblock%}
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="bread-inner">
+					<ul class="bread-list">
+						<li><a href="/">Home<i class="ti-arrow-right"></i></a></li>
+						<li class="active"><a href="/orders">Your Order</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Breadcrumbs -->
+
+<div class="container">
+   <div class="border rounded p-4 m-4">
+        <h2 class="display-4 pl-4 ml-4">Your Orders</h2>
+        <hr>
+        <table class="table shopping-summery">
+            <thead>
+                <tr class="main-hading">
+                    <th class="text-center">Sno.</th>
+                    <th class="text-center">Image</th>
+                    <th class="text-center">Product</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Price</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Total</th>
+                    <th colspan="2" class="text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td class="text-center">{{forloop.counter}}</td>
+                    <td class="text-center"><img style="height: 80px;" class="rounded-circle" src="{{order.product.image.url}}" alt=""></td>
+                    <td class="text-center">{{order.product.name}}</td>
+                    <td class="text-center">{{order.date}}</td>
+                    <td class="text-center">{{order.product.price|currency}}</td>
+                    <td class="text-center">{{order.quantity}}</td>
+                    <td class="text-center">{{order.price|currency}}</td>
+                    {% if order.status %}
+                    <td class="text-center"><small class="badge badge-success">Completed</small></td>
+                    <td class="text-center"><a href="{% url 'view_bill' id=order.id %}"><small class="badge badge-primary">View Bill</small></a></td>
+                    {%else%}
+                    <td class="text-center"><small class="badge badge-warning">Pending</small></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+   </div>
+</div>
+
+<ul class="nav justify-content-center">
+	{% if orders.has_previous %}
+	<li class="btn btn-primary" style="margin-bottom:25px;">
+		<a class="page-link" href="?page={{orders.previous_page_number}}"> Previous</a>
+	</li>
+	{% endif %}
+	<li class="btn" style="margin-right:5px;margin-left:5px; margin-bottom:25px;">
+		<a class="page-link" >{{ orders.number }}</a>
+	</li>
+	{% if orders.has_next %}
+	<li class="btn btn-primary" style="margin-bottom:25px;">
+		<a class="page-link" href="?page={{orders.next_page_number}}">Next</a>
+	</li>
+	{% endif %}   
+</ul>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'dashboard/base.html' %}
+{%load static%}
+{% block body %}
+
+<!-- This is the start of main dashboard page content section. -->
+        <div class="card border-danger mb-3">
+            <div class="card-header" align="center" style="color:green; font-size:30px;">Customer Feedback {{contact.name}}</div>
+            <div class="card-body text-primary">
+                    <div class="row">
+                    {%for contact in contact%}
+                    <div class="col-md-4">
+                        <div class="card border-primary mb-3" style="max-width: 18rem;">
+                            <div class="card-header" style="color:purple;">From : {{contact.name}}</div>
+                            <div class="card-body text-primary">
+                                <p class="card-text">Subject : {{contact.subject}}</p>
+                                <p class="card-text">Email : {{contact.email}}</p>
+                                <p class="card-text">Phone : {{contact.phone}}</p>
+                                <p class="card-text">Message : {{contact.message}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+<!-- This is the end of main dashboard page content section. -->
+                       
+{% endblock %}    

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Products - MyBeauty{%endblock%}
+{%block content %}
+{% load cart %}
+{% load custom_filter %}
+
+
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="bread-inner">
+					<ul class="bread-list">
+						<li><a href="/">Home<i class="ti-arrow-right"></i></a></li>
+						<li class="active"><a href="{% url 'products' %}">Product</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> 
+<!-- End Breadcrumbs -->
+	<h2 align="center" style="margin-top:50px;"> Get The Amazing Collection Of Products</h2>
+<!-- Product Style -->
+<section class="product-area shop-sidebar shop section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-4 col-12">
+				<div class="shop-sidebar">
+					<!-- Single Widget -->
+					<div class="single-widget category">
+						<h3 class="title"><a href="/products">All Categories</a></h3>
+						<ul class="categor-list">
+							{% for category in categories %}
+							<li><a href="/products?category={{category.id}}"class="list-group-item list-group-item-action">
+								{{category.name}}</a>
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
+					<!--/ End Single Widget -->	
+				</div> 
+			</div>
+			
+			<div class="col-lg-9 col-md-8 col-12">
+				<div class="row">
+                    {% for product in products %}
+					<div class="col-lg-4 col-md-6 col-12" id="{{product.id}}" style="width:18rem; height:30rem;">
+						<div class="single-product">
+							<div class="product-img">
+								<a href="/product_details/{{product.id}}">
+									<img class="default-img" src="{{product.image.url}}" style="height:300px;width:260px;" alt="#">
+								</a>
+								{% if product|is_in_cart:request.session.cart %}
+                                <div class="row no-gutters">
+                                    <form action="/products#{{product.id}}" class="col-2 " method="post">
+                                        {% csrf_token %}
+                                        <input hidden type="text" name='product' value='{{product.id}}'>
+                                        <input hidden type="text" name='remove' value='True'>
+                                        <button type="submit" class="btn btn-success btn-lg float-left"><i class="fa fa-trash"></i></button>
+                                    </form>
+                                    <div class="text-center col">{{product|cart_quantity:request.session.cart}} in Cart</div>
+                                        <form action="/products#{{product.id}}" class="col-2 " method="post">
+                                            {% csrf_token %}
+                                            <input hidden type="text" name='product' value='{{product.id}}'>
+                                            <button type="submit" class="btn btn-success btn-lg float-right"><i class="fa fa-plus-square"></i></button>
+                                        </form>
+                                    </div>
+                                    {% else %}
+                                    <form action="/products#{{product.id}}" method="POST" class="btn-block">
+                                        {% csrf_token %}
+                                        <input hidden type="text" name='product' value='{{product.id}}'>
+                                        <input type="submit" class="btn" style="width:260px;" value="Add To Cart">
+                                    </form>
+                                    {% endif %}
+								</div>
+								<div class="product-content">
+									<h3><a href="#">{{product.name}}</a></h3>
+									<div class="product-price">
+									<span>{{product.price|currency}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--/ End Product Style 1  -->	
+
+{% endblock content %}

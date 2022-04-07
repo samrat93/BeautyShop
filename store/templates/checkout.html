@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block title %}Checkout - TNT-Fashions{%endblock%}
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+{% load static %}
+
+
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="bread-inner">
+					<ul class="bread-list">
+						<li><a href="/">Home<i class="ti-arrow-right"></i></a></li>
+						<li class="active"><a href="checkout">Checkout</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Breadcrumbs -->
+<!-- Start Checkout -->
+<section class="shop checkout section">
+	<div class="container">
+		<div class="row"> 
+			<div class="col-lg-8 col-12">
+				<div class="checkout-form">
+					<h2>Make Your Checkout Here</h2>
+					<p>Please fill all the data properly</p>
+					<!-- Form -->
+					<form class="form" method="POST" action="" id="myform" enctype="multipart/form-data">
+                        {% csrf_token %}
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-12">
+								<div class="form-group">
+									<label>First Name<span>*</span></label>
+									<input type="text" name="first_name" placeholder="first name here..." required="required">
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-12">
+							    <div class="form-group">
+									<label>Last Name<span>*</span></label>
+									<input type="text" name="last_name" placeholder="last name here..." required="required">
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-12">
+								<div class="form-group">
+									<label>Email Address<span>*</span></label>
+									<input type="email" name="email" placeholder="email here..." required="required">									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-12">
+									<div class="form-group">
+										<label>Phone Number<span>*</span></label>
+										<input type="number" name="phone" placeholder="contact here..." required="required">
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-12">
+									<div class="form-group">
+										<label>Country<span>*</span></label>
+										<select name="country" id="country">
+											<option value="India">India</option>
+											<option value="Nepal">Nepal</option>
+											<option value="USA">USA</option>
+											<option value="UK">UK</option>
+                                            <option value="Hongkong">Hongkong</option>
+                                            <option value="Australia">Australia</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-12">
+									<div class="form-group">
+										<label>Delivery Address<span>*</span></label>
+										<input type="text" name="address" placeholder="full address here..." required="required">
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-12">
+									<div class="form-group">
+										<label>Postal Code<span>*</span></label>
+										<input type="text" name="postal" placeholder="postal code here..." required="required">
+									</div>
+								</div>
+							</div>
+						</form>
+							<!--/ End Form -->
+					</div>
+				</div>
+				<div class="col-lg-4 col-12">
+					<div class="order-details">
+						<!-- Order Widget -->
+						<div class="single-widget">
+							<h2>CART  TOTALS</h2>
+							<div class="content">
+								<ul>
+									<li>Sub Total<span>{{products|total_cart_price:request.session.cart|currency}}</span></li>
+									<li>(+) GST<span>5% included </span></li>
+									<li class="last">Total<span>{{products|total_cart_price:request.session.cart|currency}}</span></li>
+								</ul>
+							</div>
+						</div>
+			    		<!--/ End Order Widget -->
+						<!-- Order Widget -->
+						<div class="single-widget">
+							<h2>Payments</h2>
+							<div class="content">
+								<div class="single-widget payement">
+									<label style="color:green;font-weight: bold;" for="2">Only Cash On Delivery Availabe Now</label>
+                                    <label style="color:red;" class="label" for="2">Online Payment Comming soon...</label>
+								</div>
+							</div>
+						</div>
+						<!--/ End Order Widget -->
+						<!-- Payment Method Widget 
+						<div class="single-widget payement">
+							<div class="content">
+								<img src="{%static 'images/payment-method.png' %}" alt="#">
+							</div>
+						</div>
+                        -->
+						<!--/ End Payment Method Widget -->
+						<!-- Button Widget -->
+						<div class="single-widget get-button">
+							<div class="content">
+								<div class="button">
+                                    <input type="submit" form="myform" style="color:blue;" class="btn" name="submit" value="Check Out">
+								</div>
+							</div>
+						</div>
+						<!--/ End Button Widget -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

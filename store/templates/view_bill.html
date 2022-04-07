@@ -1,0 +1,96 @@
+{% extends 'cssfile.html' %}
+{% block title %}Bill - MyBeauty{%endblock%}
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+{% load static %}
+
+
+<!-- Start Checkout -->
+<section class="shop checkout section">
+	<div class="container">
+		<div class="row"> 
+			<div class="col-lg-8 col-12">
+				<div class="checkout-form">
+					<h1 style="color:orange;">INVOICE</h1>
+                    <p style="color:purple;font-weight: bold;">MyBeauty Pvt.Ltd.</p>
+                    <hr>
+					<!-- Form -->
+                    <div align="right"style="margin-right:25px;margin-bottom:15px;">
+                        <img style="height:150px;width:120px;" class="rounded" src="{{order.product.image.url}}" alt="">
+                    </div>
+                    <table class="table shopping-summery">
+                        <tr class="main-hading">
+                            <th class="product-name">Product Name</th>
+                                <td class="title">
+                                    <h6>{{order.product.name}}</h6>
+                                </td>
+                        </tr>
+                        <tr>
+                            <th class="product-name">Product Category</th>
+                                <td class="title">
+                                    <h6>{{order.product.category}}</h6>
+                                </td>
+                        </tr>
+                        <tr class="main-hading">
+                            <th class="product-name">Product Quantity</th>
+                                <td class="title">
+                                    <h6>{{order.quantity}}</h6>
+                                </td>
+                        </tr>
+                        <tr class="main-hading">
+                            <th class="product-name">Order Date</th>
+                                <td class="title">
+                                    <h6>{{order.date}}</h6>
+                                </td>
+                        </tr>
+                    </table>    
+                    <table>
+                    <tr align="right">
+                        <td><h5 style="color:orange;">Total Amount</h5></td>
+                        <td><h6 style="color:purple;">₹ {{order.price}}</h6></td>
+                    </tr>
+                    </table>                       
+					<!--/ End Form -->
+					</div>
+				</div>
+				<div class="col-lg-4 col-12">
+					<div class="order-details">
+						<!-- Order Widget -->
+						<div class="single-widget">
+							<div align="center"><img src="{% static 'images/logo.png' %}" alt="logo"></div>
+							<div class="content">
+								<ul>
+									<li>A28-2nd floor khodiyar-nagar society, Adajangam Surat,Gujarat-India</span></li>
+									<li>Email : support@mybeauty.com </span></li>
+                                    <li>Contact : +91-6356672950 </span></li>
+								</ul>
+                                <hr>
+                                
+                                <h5 class="title" style="margin-left:10px;color:orange;">Bill To,</h5>
+                                <div style="margin-bottom:10px;padding-left:30px;padding-top:10px;">
+                                    <h6 class="product-name" style="color:purple;">{{order.customer.first_name}} {{order.customer.last_name}}</h6>
+                                    <p class="product-name">Country : {{order.country}}</p>
+                                    <p class="product-name">Address : {{order.address}}</p>
+                                    <p class="product-name">Email : {{order.email}}</p>
+                                    <p class="product-name">Phone : {{order.phone}}</p>
+                                    <p class="product-name">Postal Code : {{order.postal}}</p>
+                                </div>
+							</div>
+						</div>
+			    		<!--/ End Order Widget -->
+						<!-- Button Widget -->
+						<div class="single-widget get-button">
+							<div class="content">
+								<div class="button">
+                                     <a class="btn" href="{% url 'download_bill' id=order.id %}">Download Bill</a>
+                                </div>
+							</div>
+						</div>
+					<!--/ End Button Widget -->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

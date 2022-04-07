@@ -1,0 +1,72 @@
+{% extends 'dashboard/base.html' %}
+{% load static%}
+{% block body %}
+
+<!-- This is the start of main table content page section. -->
+
+<div class="card border-danger mb-3">
+    <div class="card-header" align="center" style="color:green; font-size:30px;">Customer Details </div>
+    <div class="card-body text-primary">          
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>S.N</th>
+                        <th>Photo</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>State</th>
+                        <th>City</th>
+                    <!-- <th>Operations</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                {% for customer in list_cust%}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        {% if customer.image%}
+                        <td><img src="{{customer.image.url|default_if_none:'#'}}" height="70" width="70"></td>
+                        {% else %}
+                        <td><img class="img-circle" src="{%static 'images/no_img.jpg'%}" height="70" width="70"></td>
+                        {% endif %}
+                        <td>{{customer.first_name}}</td>
+                        <td>{{customer.last_name}}</td>
+                        <td>{{customer.phone}}</td>
+                        <td>{{customer.email}}</td>
+                        <td>{{customer.gender}}</td>
+                        <td>{{customer.address}}</td>
+                        <td>{{customer.state}}</td>
+                        <td>{{customer.city}}</td>
+                        <!-- 
+                        <td><a class="btn btn-primary" href=""style="margin-right:10px;margin-bottom:5px;margin-top:5px;"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                        <a class="btn btn-danger" href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td> -->
+                    </tr>
+                     {% endfor %}
+                </tbody>
+            </table>
+            <ul class="nav justify-content-center">
+				{% if list_cust.has_previous %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{list_cust.previous_page_number}}">Previous</a>
+					</li>
+					{% endif %}
+					<li class="page-item">
+						<a class="page-link" >{{ list_cust.number }}</a>
+					</li>
+					{% if list_cust.has_next %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{list_cust.next_page_number}}">Next</a>
+					</li>
+				{% endif %}   
+			</ul>
+        </div>
+    </div>
+</div>
+<!-- This is the end of main dashboard page content section. -->
+{% endblock %}
+
+

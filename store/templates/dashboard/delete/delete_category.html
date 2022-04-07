@@ -1,0 +1,22 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block body %}
+<div class="card border-danger mb-3">
+    <div class="card-header"style="color:red; font-size:30px;">Are You Sure Want To Delete This Category ? {{contact.name}}</div>
+    <div class="card-body text-primary">
+        <div class="container contact-form">
+            <form method="POST" enctype="multipart/form-data" action="">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <input class="btn btn-danger"type="submit" value="Yes"/>
+                        <a href="{% url 'add_category' %}"><div class="btn btn-primary">Cancel</div></a>
+                    </div>
+                </div>
+            </form>         
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+

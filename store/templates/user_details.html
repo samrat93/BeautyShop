@@ -1,0 +1,92 @@
+
+{% load custom_filter %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'login/css/style.css' %}">
+
+	<title>MyBeauty User Details</title>
+</head>
+<body>
+<div class="form_wrapper">
+  <div class="form_container">
+    <div class="title_container">
+	
+      <h2>Hello, {{data.first_name}} Update Your Profile</h2>
+	  
+    </div>
+	<hr>
+    <div class="row clearfix">
+        <div class="">
+	  		<div class="input_field">
+			{%if data.image %}
+			<div align="center" style="margin-top:15px; margin-bottom:15px;">
+				<img class="img-circle" src="{{data.image.url|default_if_none:'#'}}"/>
+			</div>
+			{%else%}
+			<div align="center" style="margin-top:15px; margin-bottom:15px;">
+				<img class="img-circle" src="{%static 'images/no_img.jpg'%}"/>
+			</div>
+			{%endif%}
+			<table id="customers">
+				<tr>
+					<td style="color:purple;">First Name</td>
+					<td> {{data.first_name}}</td>
+				</tr>
+				<tr>
+					<td style="color:purple;">Last Name</td>
+					<td> {{data.last_name}}</td>
+				</tr>
+				<tr>
+					<td style="color:purple;">Email</td>
+					<td> {{data.email}}</td>
+				</tr>
+				<tr>
+					<td style="color:purple;">Gender</td>
+					<td> {{data.gender}}</td>
+				</tr>
+				<tr>
+					<td style="color:purple;">State</td>
+					<td> {{data.state}}</td>
+				</tr>
+				<tr>
+					<td style="color:purple;">City</td>
+					<td> {{data.city}}</td>
+				</tr>
+				<tr>
+					<td style="color:purple;">Address</td>
+					<td> {{data.address}}</td>
+				</tr>
+				<tr>
+					<td style="color:purple;">Pin Code</td>
+					<td> {{data.pincode}}</td>
+				</tr>
+
+			</table>
+			
+		</div>
+		 <div class="row clearfix">
+				<div class="col_half">
+					<input onclick="location.href='update_user_details'" class="button" type="submit" value="Update Profile" />
+				</div>
+				<div class="col_half">
+					<input onclick="location.href='change_profile_photo'" class="button" type="submit" value="Change Profile Photo"/>
+				</div>
+			</div>
+		<hr>
+		  <p class="login-register-text">Want to go back ? <a href="/">Website</a>.</p>
+		  <p class="login-register-text">Yout Want To <a href="logout">Logout ?</a></p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<p class="credit">Developed by <a href="facebook.com/unique.s.shah" target="_blank">Samrat Bikram Shah</a></p>
+</body>
+</html>

@@ -1,0 +1,114 @@
+{% extends 'dashboard/base.html' %}
+{% load static%}
+{% block body %}
+
+<!-- This is the start of main dashboard page content section. -->
+<div class="card border-danger mb-3">
+    <div class="card-header" align="center" style="color:green; font-size:30px;">Add New Product</div>
+    <div class="card-body text-primary">
+        <div class="container contact-form">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-sm-10" style="margin-top:10px">
+                            <input type="text" name="name" class="form-control" placeholder="Product Name" value="" required/>
+                        </div>
+                        <div class="col-sm-10" style="margin-top:10px">
+                            <input type="Number" name="price" class="form-control" placeholder="Product Price" value="" required/>
+                        </div>
+                         <div class="form-group mt-3">
+                            <label class="mr-2">Upload Image :</label>
+                            <input type="file" name="image" style="margin-bottom:10px"required/>
+                        </div>
+                        <div class="form-group" style="margin-top:15px;margin-bottom:15px">
+                        Select The Category : 
+                            <select class="btn btn-info"name="category" required>
+                            <option></option>
+                                {% for cat in add_category%}
+                                <option value="{{cat.id}}" required>{{cat.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div align="center">
+							{% if messages %}
+								<ul class="messages">
+								{% for message in messages %}
+								<h4 align = "right" style="color:green"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h4>
+								{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"  style="margin-top:10px">
+                            <textarea name="description" class="form-control" placeholder="Product Description" style="width: 100%; height: 150px;"required></textarea>
+                        </div>
+                        <div class="form-group row" style="margin-top:10px" align="right">
+                            <div class="col-sm-10">
+                                <input type="submit" name="submit" class="btn btn-success" value="SAVE PRODUCT" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>         
+        </div>
+    </div>
+</div>
+
+<!-- This is the start of main table content page section. -->
+
+<div class="card border-danger mb-3">
+    <div class="card-header" align="center" style="color:green; font-size:30px;">Product Details </div>
+    <div class="card-body text-primary">          
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>S.N</th>
+                        <th class="text-center"> Product Image</th>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Price
+                        <th>Description</th>
+                        <th colspan="2" class="text-center">Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for product in page_obj%}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td><img src="{{product.image.url|default_if_none:'#'}}" height="70" width="60"> </td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.category}}</td>
+                        <td>{{product.price}}</td>
+                        <td>{{product.description}}</td>
+                        <td align="right"><a class="btn btn-primary" href="{% url 'edit_product' id=product.id %}"><i class="fas fa-edit" aria-hidden="true"></i></a></td>
+                        <td><a class="btn btn-danger" href="{% url 'delete_product' id=product.id %}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                    </tr>
+                     {% endfor %}
+                </tbody>
+            </table>
+            <ul class="nav justify-content-center">
+				{% if page_obj.has_previous %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a>
+					</li>
+					{% endif %}
+					<li class="page-item">
+						<a class="page-link" >{{ page_obj.number }}</a>
+					</li>
+					{% if page_obj.has_next %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+					</li>
+				{% endif %}   
+			</ul>
+        </div>
+    </div>
+</div>
+<!-- This is the end of main dashboard page content section. -->
+{% endblock %}
+
+
